@@ -35,7 +35,7 @@ public class Origin {
     private int publishedYear;
 
     @Column
-    private int isbn;
+    private String isbn;
 
 
     @OneToMany(
@@ -63,6 +63,7 @@ public class Origin {
         return  "originId = " + id + "\n" +
                 "title = " + title + "\n" +
                 "author = " + author + "\n" +
-                "publishedYear = " + publishedYear;
+                "publishedYear = " + publishedYear + "\n" +
+                "isbn = " + isbn;
     }
 }

@@ -13,7 +13,7 @@ public class OriginDtoRequest {
     private String title;
     private String author;
     private int publishedYear;
-    private int isbn;
+    private String isbn;
     private List<Book> books;
 
 }
