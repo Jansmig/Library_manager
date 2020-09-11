@@ -16,6 +16,4 @@ public interface UserReposiotry extends CrudRepository<User, Long> {
 
     @Override
     Optional<User> findById(Long userId);
-
-
 }
