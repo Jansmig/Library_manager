@@ -28,6 +28,9 @@ public class User {
     @Column
     private String lastName;
 
+    @Column
+    private String email;
+
     private LocalDateTime userCreationDate;
 
     @OneToMany(

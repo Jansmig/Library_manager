@@ -15,6 +15,7 @@ public class UserMapper {
                 user.getId(),
                 user.getFirstName(),
                 user.getLastName(),
+                user.getEmail(),
                 user.getUserCreationDate(),
                 user.getRentals().stream()
                         .map(n -> n.getId())
@@ -26,6 +27,7 @@ public class UserMapper {
                 userDtoRequest.getId(),
                 userDtoRequest.getFirstName(),
                 userDtoRequest.getLastName(),
+                userDtoRequest.getEmail(),
                 userDtoRequest.getUserCreationDate(),
                 userDtoRequest.getRentals());
     }

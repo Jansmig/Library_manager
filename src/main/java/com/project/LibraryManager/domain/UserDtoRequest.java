@@ -13,6 +13,7 @@ public class UserDtoRequest {
     private long id;
     private String firstName;
     private String lastName;
+    private String email;
     private LocalDateTime userCreationDate;
     private List<Rental> rentals;
 
