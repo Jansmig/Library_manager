@@ -53,5 +53,15 @@ public class RentalController {
         return rentalMapper.mapToRentalDtoResponse((rentalService.getRental(rentalId)).orElseThrow(RentalNotFoundException::new));
     }
 
+    @RequestMapping(value = "/rentals/updateRental/{rentalId}", method = RequestMethod.PATCH, consumes = APPLICATION_JSON_VALUE)
+    public void updateRental(@RequestBody RentalDtoRequest rentalDtoRequest, @PathVariable long rentalId) throws RentalNotFoundException, UserNotFoundException, BookNotFoundException {
+        Rental updatedRental = rentalService.getRental(rentalId).orElseThrow(RentalNotFoundException::new);
+        User tempUser = userService.getUser(rentalDtoRequest.getUserId()).orElseThrow(UserNotFoundException::new);
+        Book tempBook = bookService.getBook(rentalDtoRequest.getBookId()).orElseThrow(BookNotFoundException::new);
+        updatedRental.setBook(tempBook);
+        updatedRental.setUser(tempUser);
+        rentalService.saveRental(updatedRental);
+    }
+
 
 }

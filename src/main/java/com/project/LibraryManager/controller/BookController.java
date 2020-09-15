@@ -2,6 +2,7 @@ package com.project.LibraryManager.controller;
 
 import com.project.LibraryManager.domain.Book;
 import com.project.LibraryManager.domain.BookDto;
+import com.project.LibraryManager.domain.Origin;
 import com.project.LibraryManager.exception.BookNotFoundException;
 import com.project.LibraryManager.exception.OriginNotFoundException;
 import com.project.LibraryManager.exception.StatusNotFoundException;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping(value = "/v1")
@@ -53,6 +56,23 @@ public class BookController {
     @RequestMapping(value = "/books/{bookStatus}/{title}/count", method = RequestMethod.GET)
     public long countBooksWithStatusAndTitle(@PathVariable String bookStatus, @PathVariable String title) {
         return bookService.countBooksByStatusAndTitle(bookStatus, title);
+    }
+
+    @RequestMapping(value = "/books/updateBook/{bookId}", method = RequestMethod.PUT, consumes = APPLICATION_JSON_VALUE)
+    public void updateBook(@RequestBody BookDto bookDto, @PathVariable long bookId) throws OriginNotFoundException, BookNotFoundException {
+        Origin tempOrigin = originService.getOrigin(bookDto.getOriginId()).orElseThrow(OriginNotFoundException::new);
+        Book updatedBook = bookService.getBook(bookId).orElseThrow(BookNotFoundException::new);
+        updatedBook.setOrigin(tempOrigin);
+        bookService.saveBook(updatedBook);
+    }
+
+    @RequestMapping(value = "/books/{bookId}", method = RequestMethod.DELETE)
+    public void deleteUser(@PathVariable long bookId) {
+        try {
+            bookService.deleteBook(bookId);
+        } catch (Exception e) {
+            throw new BookNotFoundException();
+        }
     }
 
 }

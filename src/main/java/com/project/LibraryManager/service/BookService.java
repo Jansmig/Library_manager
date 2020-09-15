@@ -54,4 +54,8 @@ public class BookService {
         return bookReposiotry.findByBookStatusAndOrigin_TitleIgnoreCase(bookStatus, title);
     }
 
+    public void deleteBook(long bookId) {
+        bookReposiotry.deleteById(bookId);
+    }
+
 }

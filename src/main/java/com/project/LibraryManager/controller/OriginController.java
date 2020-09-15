@@ -59,4 +59,9 @@ public class OriginController {
         }
     }
 
+    @RequestMapping(value = "/origins", method = RequestMethod.PUT, consumes = APPLICATION_JSON_VALUE)
+    public void updateOrigin(@RequestBody OriginDtoRequest originDtoRequest) {
+        originService.saveOrigin(originMapper.mapToOrigin(originDtoRequest));
+    }
+
 }

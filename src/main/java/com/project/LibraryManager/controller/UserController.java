@@ -40,4 +40,20 @@ public class UserController {
         return userMapper.mapToUserDtoResponse(userService.getUser(userId).orElseThrow(UserNotFoundException::new));
     }
 
+    @RequestMapping(value ="/users", method = RequestMethod.PUT, consumes = APPLICATION_JSON_VALUE)
+    public void updateUser(@RequestBody UserDtoRequest userDtoRequest) throws UserInvalidNameException {
+        userService.validateUserName(userDtoRequest.getFirstName());
+        userService.validateUserName(userDtoRequest.getLastName());
+        userService.saveUser(userMapper.mapToUser(userDtoRequest));
+    }
+
+    @RequestMapping(value = "/users/{userId}", method = RequestMethod.DELETE)
+    public void deleteUser(@PathVariable long userId) {
+        try {
+            userService.dleteUser(userId);
+        } catch (Exception e) {
+            throw new UserNotFoundException();
+        }
+    }
+
 }

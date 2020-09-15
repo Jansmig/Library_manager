@@ -28,5 +28,9 @@ public class UserService {
         }
     }
 
+    public void dleteUser(long userId) {
+        userReposiotry.deleteById(userId);
+    }
+
 
 }
