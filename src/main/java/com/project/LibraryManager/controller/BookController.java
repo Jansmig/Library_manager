@@ -67,7 +67,7 @@ public class BookController {
     }
 
     @RequestMapping(value = "/books/{bookId}", method = RequestMethod.DELETE)
-    public void deleteUser(@PathVariable long bookId) {
+    public void deleteBook(@PathVariable long bookId) {
         try {
             bookService.deleteBook(bookId);
         } catch (Exception e) {
