@@ -58,4 +58,8 @@ public class BookService {
         bookReposiotry.deleteById(bookId);
     }
 
+    public List<Book> getAllBooks() {
+        return bookReposiotry.findAll();
+    }
+
 }

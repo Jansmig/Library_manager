@@ -23,5 +23,8 @@ public interface BookReposiotry extends CrudRepository<Book, Long> {
 
     List<Book> findByBookStatusAndOrigin_TitleIgnoreCase(BookStatus bookStatus, String title);
 
+    @Override
+    List<Book> findAll();
+
 
 }

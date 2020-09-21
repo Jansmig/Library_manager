@@ -75,4 +75,9 @@ public class BookController {
         }
     }
 
+    @RequestMapping(value = "/books", method = RequestMethod.GET)
+    public List<BookDto> getBooksList() {
+       return bookMapper.mapToBookDtoList(bookService.getAllBooks());
+    }
+
 }
