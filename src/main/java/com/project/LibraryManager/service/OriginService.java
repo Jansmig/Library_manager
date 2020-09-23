@@ -41,6 +41,10 @@ public class OriginService {
         }
     }
 
+    public void deleteOrigin(long originId) {
+        originReposiotry.deleteById(originId);
+    }
+
 
 
 }

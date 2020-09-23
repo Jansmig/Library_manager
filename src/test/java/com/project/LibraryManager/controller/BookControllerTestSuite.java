@@ -166,6 +166,23 @@ public class BookControllerTestSuite {
         verify(bookService, times(1)).deleteBook(1L);
     }
 
+
+    @Test
+    public void testGetBooksList() throws Exception {
+        //given:
+        BookDto bookDto = new BookDto(1L, 2L, "Adventures", AVAILABLE);
+        List<BookDto> bookDtoList = new ArrayList<>();
+        bookDtoList.add(bookDto);
+        //when:
+        when(bookService.getAllBooks()).thenReturn(new ArrayList<>());
+        when(bookMapper.mapToBookDtoList(anyList())).thenReturn(bookDtoList);
+        //then:
+        mockMvc.perform(get("/v1/books"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id", is(1)))
+                .andExpect(jsonPath("$[0].title", is("Adventures")));
+    }
+
 }
 
 

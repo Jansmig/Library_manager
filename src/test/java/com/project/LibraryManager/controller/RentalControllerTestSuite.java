@@ -19,10 +19,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.any;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
@@ -174,6 +177,34 @@ public class RentalControllerTestSuite {
                 .andExpect(status().isOk());
 
         Mockito.verify(rentalService, times(1)).saveRental(rental);
+    }
+
+
+    @Test
+    public void testGetAllRentals() throws Exception {
+        //given:
+        RentalDtoResponse rentalDtoResponse = new RentalDtoResponse(
+                4L,
+                2L,
+                "Adventures",
+                3L,
+                "Rob",
+                "Tester",
+                null,
+                null,
+                true
+        );
+
+        List<RentalDtoResponse> rentalDtoResponseList = new ArrayList<>();
+        rentalDtoResponseList.add(rentalDtoResponse);
+        //when:
+        when(rentalMapper.mapToRentalDtoResponseList(anyList())).thenReturn(rentalDtoResponseList);
+        //then:
+        mockMvc.perform(get("/v1/rentals"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id", is(4)))
+                .andExpect(jsonPath("$[0].userFirstName", is("Rob")));
+
     }
 
 

@@ -4,6 +4,9 @@ import com.project.LibraryManager.domain.Rental;
 import com.project.LibraryManager.domain.RentalDtoResponse;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class RentalMapper {
 
@@ -19,6 +22,12 @@ public class RentalMapper {
                 rental.getReturnDate(),
                 rental.isActive()
         );
+    }
+
+    public List<RentalDtoResponse> mapToRentalDtoResponseList (List<Rental> rentals) {
+        return rentals.stream()
+                .map(this::mapToRentalDtoResponse)
+                .collect(Collectors.toList());
     }
 
 

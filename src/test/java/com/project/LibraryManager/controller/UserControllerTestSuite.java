@@ -117,4 +117,32 @@ public class UserControllerTestSuite {
     }
 
 
+    @Test
+    public void testGetUsersList() throws Exception {
+        //given:
+        UserDtoResponse userDtoResponse = new UserDtoResponse(2L, "Bob", "Smith", "bobs@gmail.com", null, new ArrayList<Long>());
+        List<UserDtoResponse> usersList = new ArrayList<>();
+        usersList.add(userDtoResponse);
+        //when:
+        when(userService.getAllUsers()).thenReturn(new ArrayList<User>());
+        when(userMapper.mapToUserDtoResponseList(ArgumentMatchers.anyList())).thenReturn(usersList);
+        //then:
+        mockMvc.perform(get("/v1/users"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id", is(2)))
+                .andExpect(jsonPath("$[0].firstName", is("Bob")));
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 }

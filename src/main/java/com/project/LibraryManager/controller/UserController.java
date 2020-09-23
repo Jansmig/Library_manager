@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -54,6 +55,11 @@ public class UserController {
         } catch (Exception e) {
             throw new UserNotFoundException();
         }
+    }
+
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    public List<UserDtoResponse> getUsersList(){
+       return userMapper.mapToUserDtoResponseList((userService.getAllUsers()));
     }
 
 }

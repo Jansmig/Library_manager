@@ -26,4 +26,8 @@ public class RentalService {
         return rentalReposiotry.findAllByActiveIsTrue();
     }
 
+    public List<Rental> getAllRentals(){
+        return rentalReposiotry.findAll();
+    }
+
 }

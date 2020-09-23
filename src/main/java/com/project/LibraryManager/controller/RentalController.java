@@ -63,5 +63,10 @@ public class RentalController {
         rentalService.saveRental(updatedRental);
     }
 
+    @RequestMapping(value = "/rentals", method = RequestMethod.GET)
+    public List<RentalDtoResponse> getAllRentals() {
+        return rentalMapper.mapToRentalDtoResponseList(rentalService.getAllRentals());
+    }
+
 
 }

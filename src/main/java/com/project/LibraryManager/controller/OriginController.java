@@ -64,4 +64,9 @@ public class OriginController {
         originService.saveOrigin(originMapper.mapToOrigin(originDtoRequest));
     }
 
+    @RequestMapping(value = "/origins/{originId}", method = RequestMethod.DELETE)
+    public void deleteOrigin(@PathVariable long originId) {
+        originService.deleteOrigin(originId);
+    }
+
 }

@@ -5,6 +5,7 @@ import com.project.LibraryManager.domain.UserDtoRequest;
 import com.project.LibraryManager.domain.UserDtoResponse;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
@@ -30,6 +31,12 @@ public class UserMapper {
                 userDtoRequest.getEmail(),
                 userDtoRequest.getUserCreationDate(),
                 userDtoRequest.getRentals());
+    }
+
+    public List<UserDtoResponse> mapToUserDtoResponseList(List<User> userList) {
+        return userList.stream()
+                .map(this::mapToUserDtoResponse)
+                .collect(Collectors.toList());
     }
 
 }

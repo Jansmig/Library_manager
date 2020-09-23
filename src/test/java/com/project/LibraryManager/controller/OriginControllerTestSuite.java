@@ -176,4 +176,15 @@ public class OriginControllerTestSuite {
                 .andExpect(jsonPath("$", is(4.50)));
     }
 
+
+    @Test
+    public void testDeleteOrigin() throws Exception{
+        //given:
+        //when & then:
+        mockMvc.perform(delete("/v1/origins/1"))
+                .andExpect(status().isOk());
+
+        Mockito.verify(originService, times(1)).deleteOrigin(1L);
+    }
+
 }

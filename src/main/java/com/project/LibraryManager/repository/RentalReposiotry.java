@@ -20,4 +20,7 @@ public interface RentalReposiotry extends CrudRepository<Rental, Long> {
 
     List<Rental> findAllByActiveIsTrue();
 
+    @Override
+    List<Rental> findAll();
+
 }
