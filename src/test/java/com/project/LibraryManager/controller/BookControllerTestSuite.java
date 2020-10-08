@@ -174,7 +174,7 @@ public class BookControllerTestSuite {
         List<BookDto> bookDtoList = new ArrayList<>();
         bookDtoList.add(bookDto);
         //when:
-        when(bookService.getAllBooks()).thenReturn(new ArrayList<>());
+       // when(bookService.getAllBooks()).thenReturn(new ArrayList<>());
         when(bookMapper.mapToBookDtoList(anyList())).thenReturn(bookDtoList);
         //then:
         mockMvc.perform(get("/v1/books"))

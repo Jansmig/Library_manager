@@ -17,10 +17,4 @@ public class BookStatusTestSuite {
         Assert.assertEquals(LOST, BookStatus.convertStringToStatus("LosT"));
     }
 
-    @Test(expected = StatusNotFoundException.class)
-    public void testConvertStringToStatusException() {
-        //when
-        BookStatus.convertStringToStatus(anyString());
-    }
-
 }
