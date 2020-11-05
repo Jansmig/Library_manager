@@ -1,31 +1,21 @@
 # Library_manager
 
-Library Manager to aplikacja do zarządzania zasobami biblioteki. Logika aplikacji bazuje na 4 encjach: 
-<br>Origin: - zasób biblioteki, posiada wszelkie informacje typu: tytuł, autor, rok wydania, numer ISBN itd. Jest bazą dla książki (egzemplarza). Generalnie powinien być jeden Origin i wiele książek (czyli jego egzemplarzy).
-<br>Book – egzemplarz danego Origin. Np. jest jeden Origin książki „Hobbit” i wiele książek (egzemplarzy), których część jest wypożyczona, cześć dostępna w bibliotece itp.
-<br>User – użytkownik biblioteki
-<br>Rental – wypożyczenie książki przez użytkownika. 
-<br>Do zarządzania zasobami w bazie danych wykorzystano JPA/Hibernate.
+Library Manager is an application for managing library resources. The application logic is based on 4 entities: 
+<br>Origin - library resource, has all the information such as: title, author, year of release, ISBN number, etc. It is the base for creation of each book copy.
+<br>Book - a copy of the given Origin. For example, in the resources there is one Origin "Hobbit" and many of its copies (i.e. books), some of which are rented, some available etc.
+<br>User – library's user
+<br>Rental – books' rentals. 
 <br>
 
-<br>Link do repozytorium Library Manager (front-end):
-https://github.com/Jansmig/front2
+<br>Link to visual layer (user interface) Library Manager:
+https://github.com/Jansmig/Library_manager_user_interface
 
 
-<b>Instrukcja uruchomienia projektu:</b>
-1.	Należy utworzyć foldery na oba repozytoria (front-end, i back-end)
-2.	W wierszu poleceń, wchodząc do każdego folderu, należy wykonać komendę „git init”
-3.	Następnie w każdym folderze wykonać komendę „git clone [adres repozytorium]”
-4.	W MySQL Workbench utworzyć nową bazę danych o poniższych właściwościach:
-<br>baza: library_manager
-<br>user: library_user
-<br>hasło: library_password,
-5.	Otworzyć oba projekty w IntelliJ. 
-6.	Uruchomić warstwę back-end aby Hibernate utworzył odpowiednie tabele w bazie danych. 
-7.	W MySql Workbench zapełnić bazę danych rekordami podanymi w sql w folderze resources repozytorium back-end.
-8.	Uruchomić obie warstwy aplikacji (najpierw back-end - ustawiono w properties na porcie localhost:8080, potem front-end – ustawiono na porcie 8081).
-9.	Otworzyć przeglądarkę pod adresem: http://localhost:8081/
+<b>launch instructions:</b>
+1.	Clone both back-end and front-end repositories (i.e. this project and the one given in the link above).
+2.	First run the back-end layer (uses localhost:8080)
+3.  Then run the front-end layer (uses localhost:8081)
+4.	Open following address in the web browser:   http://localhost:8081/
 
-Warstwa widoku – jest oparta na bibliotece Vaadin, obecnie tylko w podstawowym zakresie. Zakładka Origins jest najbardziej rozbudowana, posiada opcje dodawania, edycji i kasowania Originów (formularz pojawia się po kliknięciu w rekord w tabeli lub przycisk ‘Add new’). Podobne funkcjonalności mogą zostać dodane w pozostałych zakładkach.
-Do warstwy wizualnej planowane jest dodanie funkcjonalności, które są już w back-endzie (np. sprawdzanie ratingu w Goodreads, zliczanie ilości dostępnych książek wg. danego statusu itp.). 
+ 
 <br>

@@ -2,6 +2,7 @@ package com.project.LibraryManager.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -48,6 +49,10 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userCreationDate = LocalDateTime.now();
+    }
+
+    public void addRental(Rental rental){
+        this.rentals.add(rental);
     }
 
     @Override
