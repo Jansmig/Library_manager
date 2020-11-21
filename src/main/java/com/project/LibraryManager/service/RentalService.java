@@ -30,4 +30,8 @@ public class RentalService {
         return rentalReposiotry.findAll();
     }
 
+    public void deleteRental(long rentalId){
+        rentalReposiotry.deleteById(rentalId);
+    }
+
 }

@@ -36,16 +36,14 @@ public class BookController {
         Book tempBook = new Book();
         tempBook.setOrigin(originService.getOrigin(originId).orElseThrow(OriginNotFoundException::new));
         bookService.saveBook(tempBook);
+        Origin baseOrigin = originService.getOrigin(originId).orElseThrow(OriginNotFoundException::new);
+        baseOrigin.addBook(tempBook);
+        originService.saveOrigin(baseOrigin);
     }
 
     @RequestMapping(value = "/books/{bookId}", method = RequestMethod.GET)
     public BookDto getBook(@PathVariable long bookId) throws BookNotFoundException {
         return bookMapper.mapToBookDto(bookService.getBook(bookId).orElseThrow(BookNotFoundException::new));
-    }
-
-    @RequestMapping(value = "/books/{bookId}/{bookStatus}", method = RequestMethod.PATCH)
-    public void setStatus(@PathVariable long bookId, @PathVariable String bookStatus) throws BookNotFoundException, StatusNotFoundException {
-        bookService.setBookStatus(bookId, bookStatus);
     }
 
     @RequestMapping(value = "/books/{bookStatus}/{title}", method = RequestMethod.GET)
@@ -64,6 +62,11 @@ public class BookController {
         Book updatedBook = bookService.getBook(bookId).orElseThrow(BookNotFoundException::new);
         updatedBook.setOrigin(tempOrigin);
         bookService.saveBook(updatedBook);
+    }
+
+    @RequestMapping(value = "/books/setBookStatus/{bookId}/{bookStatus}", method = RequestMethod.PUT)
+    public void setStatusPut(@PathVariable long bookId, @PathVariable String bookStatus) throws BookNotFoundException, StatusNotFoundException {
+        bookService.setBookStatus(bookId, bookStatus);
     }
 
     @RequestMapping(value = "/books/{bookId}", method = RequestMethod.DELETE)

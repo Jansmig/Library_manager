@@ -2,6 +2,7 @@ package com.project.LibraryManager.controller;
 
 import com.project.LibraryManager.domain.*;
 import com.project.LibraryManager.exception.BookNotFoundException;
+import com.project.LibraryManager.exception.LibraryException;
 import com.project.LibraryManager.exception.RentalNotFoundException;
 import com.project.LibraryManager.exception.UserNotFoundException;
 import com.project.LibraryManager.mapper.RentalMapper;
@@ -66,6 +67,16 @@ public class RentalController {
     @RequestMapping(value = "/rentals", method = RequestMethod.GET)
     public List<RentalDtoResponse> getAllRentals() {
         return rentalMapper.mapToRentalDtoResponseList(rentalService.getAllRentals());
+    }
+
+    @RequestMapping(value = "/rentals/{rentalId}", method = RequestMethod.DELETE)
+    public void deleteRental(@PathVariable long rentalId) throws RentalNotFoundException {
+        try {
+            rentalService.deleteRental(rentalId);
+        }
+        catch (Exception e) {
+            throw new RentalNotFoundException();
+        }
     }
 
 
