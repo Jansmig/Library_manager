@@ -2,6 +2,7 @@ package com.project.LibraryManager.service;
 
 import com.project.LibraryManager.domain.Book;
 import com.project.LibraryManager.domain.BookStatus;
+import com.project.LibraryManager.exception.BookNotAvailableException;
 import com.project.LibraryManager.exception.BookNotFoundException;
 import com.project.LibraryManager.exception.StatusNotFoundException;
 import com.project.LibraryManager.repository.BookReposiotry;
@@ -60,6 +61,13 @@ public class BookService {
 
     public List<Book> getAllBooks() {
         return bookReposiotry.findAll();
+    }
+
+    public void validateBookAvailability(Book book){
+        BookStatus status = book.getBookStatus();
+        if(status != BookStatus.AVAILABLE) {
+            throw new BookNotAvailableException();
+        }
     }
 
 }

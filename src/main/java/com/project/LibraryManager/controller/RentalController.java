@@ -38,6 +38,7 @@ public class RentalController {
     public void createRental(@RequestBody RentalDtoRequest rentalDtoRequest) throws UserNotFoundException, BookNotFoundException {
         User tempUser = userService.getUser(rentalDtoRequest.getUserId()).orElseThrow(UserNotFoundException::new);
         Book tempBook = bookService.getBook(rentalDtoRequest.getBookId()).orElseThrow(BookNotFoundException::new);
+        bookService.validateBookAvailability(tempBook);
         Rental rental = new Rental(tempUser, tempBook);
         rentalService.saveRental(rental);
     }
