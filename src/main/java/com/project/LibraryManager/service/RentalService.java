@@ -1,6 +1,7 @@
 package com.project.LibraryManager.service;
 
 import com.project.LibraryManager.domain.Rental;
+import com.project.LibraryManager.exception.RentalNotActiveException;
 import com.project.LibraryManager.repository.RentalReposiotry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,12 @@ public class RentalService {
 
     public void deleteRental(long rentalId){
         rentalReposiotry.deleteById(rentalId);
+    }
+
+    public void validateRentalIfActive(Rental rental){
+        if(!rental.isActive()) {
+            throw new RentalNotActiveException();
+        }
     }
 
 }

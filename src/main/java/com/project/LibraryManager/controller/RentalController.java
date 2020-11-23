@@ -46,6 +46,7 @@ public class RentalController {
     @RequestMapping(value = "/rentals/{rentalId}", method = RequestMethod.PUT)
     public void closeRental(@PathVariable long rentalId) throws RentalNotFoundException {
         Rental tempRental = rentalService.getRental(rentalId).orElseThrow(RentalNotFoundException::new);
+        rentalService.validateRentalIfActive(tempRental);
         tempRental.returnBook();
         rentalService.saveRental(tempRental);
     }
