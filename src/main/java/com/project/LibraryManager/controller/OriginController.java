@@ -4,6 +4,7 @@ import com.project.LibraryManager.client.GoodreadsClient;
 import com.project.LibraryManager.domain.OriginDtoRequest;
 import com.project.LibraryManager.domain.OriginDtoResponse;
 import com.project.LibraryManager.exception.InvalidTitleException;
+import com.project.LibraryManager.exception.IsbnNotFoundException;
 import com.project.LibraryManager.exception.OriginNotFoundException;
 import com.project.LibraryManager.mapper.OriginMapper;
 import com.project.LibraryManager.service.OriginService;
@@ -51,11 +52,21 @@ public class OriginController {
     @RequestMapping(value = "/origins/rating/{isbn}", method = RequestMethod.GET)
     public String getOriginRating(@PathVariable String isbn) {
         try{
-            return goodreadsClient.getRating(isbn);
+            return goodreadsClient.getSingleRating(isbn);
         }
         catch (Exception e) {
             String message = "Invalid or unknown ISBN.";
             return message;
+        }
+    }
+
+    @RequestMapping(value = "/origins/rating", method = RequestMethod.PUT, consumes = APPLICATION_JSON_VALUE)
+    public void updateOriginRating(@RequestBody OriginDtoRequest originDtoRequest) {
+        try{
+            originService.updateOriginRating(originDtoRequest);
+        }
+        catch (Exception e) {
+            throw new IsbnNotFoundException();
         }
     }
 

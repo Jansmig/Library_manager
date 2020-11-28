@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -37,11 +38,14 @@ public class RentalServiceTestSuite {
         long rentalTwoId = rentalTwo.getId();
 
         //when:
-        List<Rental> rentals = new ArrayList<>();
-        rentals = rentalService.getActiveRentals();
+        List<Rental> rentals = rentalService.getActiveRentals();
+        List<Long> rentalsIds = rentals.stream()
+                .map(n -> n.getId())
+                .collect(Collectors.toList());
 
         //then:
-        Assert.assertEquals(2, rentals.size());
+        Assert.assertTrue(rentalsIds.contains(rentalOneId));
+        Assert.assertTrue(rentalsIds.contains(rentalTwoId));
 
         //clean-up:
         rentalReposiotry.deleteById(rentalOneId);

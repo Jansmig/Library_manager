@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.project.LibraryManager.domain.Book;
 import com.project.LibraryManager.domain.BookDto;
 import com.project.LibraryManager.domain.Origin;
+import com.project.LibraryManager.exception.OriginNotFoundException;
 import com.project.LibraryManager.mapper.BookMapper;
 import com.project.LibraryManager.service.BookService;
 import com.project.LibraryManager.service.OriginService;
@@ -24,6 +25,7 @@ import java.util.Optional;
 
 import static com.project.LibraryManager.domain.BookStatus.AVAILABLE;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -53,13 +55,15 @@ public class BookControllerTestSuite {
     @Test
     public void testCreateBook() throws Exception {
         //given
-        Origin origin = new Origin(1L, "title", "author", 2000, "1234567890", null);
+        Origin origin = new Origin(999L, "title", "author", 2000, "1234567890", null, 0);
         //when & then
         when(originService.getOrigin(ArgumentMatchers.anyLong())).thenReturn(Optional.of(origin));
+      //  when(originService.saveOrigin(ArgumentMatchers.any(Origin.class))).thenReturn(origin);
+      //  when(origin.addBook(ArgumentMatchers.any(Book.class))).thenReturn(void);
 
         mockMvc.perform(post("/v1/books/createBook")
                 .contentType(MediaType.APPLICATION_JSON)
-                .param("originId", "1"))
+                .param("originId", "999"))
                 .andExpect(status().isOk());
 
         Mockito.verify(bookService, times(1)).saveBook(any());
@@ -87,7 +91,7 @@ public class BookControllerTestSuite {
     @Test
     public void testSetStatus() throws Exception {
         //when & then
-        mockMvc.perform(patch("/v1/books/1/available"))
+        mockMvc.perform(put("/v1/books/setBookStatus/1/available"))
                 .andExpect(status().isOk());
 
         verify(bookService, times(1)).setBookStatus(1L, "available");

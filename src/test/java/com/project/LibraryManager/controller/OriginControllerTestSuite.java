@@ -50,8 +50,8 @@ public class OriginControllerTestSuite {
     @Test
     public void testCreateOrigin() throws Exception {
         //given
-        OriginDtoRequest originDtoRequest = new OriginDtoRequest(1L, "title", "author", 2000, "1234567890", null);
-        Origin origin = new Origin(1L, "title", "author", 2000, "1234567890", null);
+        OriginDtoRequest originDtoRequest = new OriginDtoRequest(1L, "title", "author", 2000, "1234567890", null, 0);
+        Origin origin = new Origin(1L, "title", "author", 2000, "1234567890", null, 0);
         Gson gson = new Gson();
         String requestBody = gson.toJson(originDtoRequest);
 
@@ -71,8 +71,8 @@ public class OriginControllerTestSuite {
     @Test
     public void testGetOrigin() throws Exception {
         //given
-        Origin origin = new Origin(1L, "title", "author", 2000, "1234567890", null);
-        OriginDtoResponse originDtoResponse = new OriginDtoResponse(1L, "title", "author", 2000, "1234567890", null);
+        Origin origin = new Origin(1L, "title", "author", 2000, "1234567890", null,0 );
+        OriginDtoResponse originDtoResponse = new OriginDtoResponse(1L, "title", "author", 2000, "1234567890", null, 0);
         //when & then
         when(originService.getOrigin(anyLong())).thenReturn(Optional.of(origin));
         when(originMapper.mapToOriginDtoResponse(ArgumentMatchers.any(Origin.class))).thenReturn(originDtoResponse);
@@ -95,8 +95,8 @@ public class OriginControllerTestSuite {
         List<Long> idsBList = new ArrayList<>();
         idsBList.add(5L);
         idsBList.add(6L);
-        OriginDtoResponse originA = new OriginDtoResponse(1L, "title1", "author1", 2001, "1234567890", idsAList);
-        OriginDtoResponse originB = new OriginDtoResponse(2L, "title2", "author2", 2002, "1234567890", idsBList);
+        OriginDtoResponse originA = new OriginDtoResponse(1L, "title1", "author1", 2001, "1234567890", idsAList, 0);
+        OriginDtoResponse originB = new OriginDtoResponse(2L, "title2", "author2", 2002, "1234567890", idsBList, 0);
 
         List<OriginDtoResponse> originDtoResponseList = new ArrayList<>();
         originDtoResponseList.add(originA);
@@ -145,8 +145,8 @@ public class OriginControllerTestSuite {
     @Test
     public void testUpdateOrigin() throws Exception {
         //given:
-        Origin origin = new Origin(1L, "title", "author", 2000, "1234567890", null);
-        OriginDtoRequest originDtoRequest = new OriginDtoRequest(2L, "title", "author", 2000, "1234567890", null);
+        Origin origin = new Origin(1L, "title", "author", 2000, "1234567890", null, 0);
+        OriginDtoRequest originDtoRequest = new OriginDtoRequest(2L, "title", "author", 2000, "1234567890", null, 0);
 
         Gson gson = new Gson();
         String requestBody = gson.toJson(originDtoRequest);
@@ -169,7 +169,7 @@ public class OriginControllerTestSuite {
         //given:
         String hobbitIsbn = "0938768425";
         //when:
-        when(goodreadsClient.getRating(hobbitIsbn)).thenReturn("4.50");
+        when(goodreadsClient.getSingleRating(hobbitIsbn)).thenReturn("4.50");
         //then:
         mockMvc.perform(get("/v1/origins/rating/" + hobbitIsbn))
                 .andExpect(status().isOk())

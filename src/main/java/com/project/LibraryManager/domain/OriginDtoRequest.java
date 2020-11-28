@@ -17,5 +17,6 @@ public class OriginDtoRequest {
     private int publishedYear;
     private String isbn;
     private List<Book> books;
+    private double rating;
 
 }

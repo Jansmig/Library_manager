@@ -13,7 +13,7 @@ public class OriginMapperTestSuite {
     @Test
     public void testMapToOriginDtoResponse(){
         //given
-        Origin origin = new Origin(1L,"Ron", "Nor", 2000, "1234567890", new ArrayList<Book>());
+        Origin origin = new Origin(1L,"Ron", "Nor", 2000, "1234567890", new ArrayList<Book>(), 0);
         Book book = new Book(2L, origin, BookStatus.AVAILABLE);
         origin.getBooks().add(book);
         OriginMapper originMapper = new OriginMapper();
@@ -37,7 +37,7 @@ public class OriginMapperTestSuite {
         bookList.add(bookOne);
         bookList.add(bookTwo);
 
-        OriginDtoRequest originDtoRequest = new OriginDtoRequest(3L, "Ron", "Nor", 2000, "1234567890", bookList);
+        OriginDtoRequest originDtoRequest = new OriginDtoRequest(3L, "Ron", "Nor", 2000, "1234567890", bookList, 0 );
         OriginMapper originMapper = new OriginMapper();
         //when
         Origin origin = originMapper.mapToOrigin(originDtoRequest);
@@ -53,8 +53,8 @@ public class OriginMapperTestSuite {
     @Test
     public void testMapToOriginDtoResponseList(){
         //given
-        Origin originOne = new Origin(1L,"Ron", "Nor", 2000, "1234567890", new ArrayList<Book>());
-        Origin originTwo = new Origin(2L,"Rona", "Nora", 2001, "1234567890", new ArrayList<Book>());
+        Origin originOne = new Origin(1L,"Ron", "Nor", 2000, "1234567890", new ArrayList<Book>(), 0);
+        Origin originTwo = new Origin(2L,"Rona", "Nora", 2001, "1234567890", new ArrayList<Book>(), 0);
         List<Origin> originList = new ArrayList<>();
         originList.add(originOne);
         originList.add(originTwo);

@@ -21,7 +21,8 @@ public class OriginMapper {
                 origin.getIsbn(),
                 origin.getBooks().stream()
                         .map(n -> n.getId())
-                        .collect(Collectors.toList())
+                        .collect(Collectors.toList()),
+                origin.getRating()
         );
     }
 
@@ -39,7 +40,8 @@ public class OriginMapper {
                 originDtoRequest.getAuthor(),
                 originDtoRequest.getPublishedYear(),
                 originDtoRequest.getIsbn(),
-                originDtoRequest.getBooks()
+                originDtoRequest.getBooks(),
+                originDtoRequest.getRating()
         );
     }
 

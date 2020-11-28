@@ -46,6 +46,9 @@ public class Origin {
     )
     private List<Book> books = new ArrayList<>();
 
+    @Column
+    private double rating;
+
 
     public Origin(String author, String title, int publishedYear) {
         this.author = author;
@@ -64,6 +67,7 @@ public class Origin {
                 "title = " + title + "\n" +
                 "author = " + author + "\n" +
                 "publishedYear = " + publishedYear + "\n" +
-                "isbn = " + isbn;
+                "isbn = " + isbn + "\n" +
+                "rating = " + rating;
     }
 }

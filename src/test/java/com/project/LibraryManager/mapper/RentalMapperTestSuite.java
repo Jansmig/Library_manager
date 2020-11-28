@@ -14,7 +14,7 @@ public class RentalMapperTestSuite {
     public void testMapToRentalDtoResponse(){
         //given
         RentalMapper rentalMapper = new RentalMapper();
-        Origin origin = new Origin(1L,"Ron", "Nor", 2000, "1234567890", new ArrayList<Book>());
+        Origin origin = new Origin(1L,"Ron", "Nor", 2000, "1234567890", new ArrayList<Book>(), 0);
         Book book = new Book(2L, origin, BookStatus.AVAILABLE);
         origin.getBooks().add(book);
         User user = new User(3L, "Bob", "Smith", "bobs@gmail.com", LocalDateTime.now(), new ArrayList<Rental>());

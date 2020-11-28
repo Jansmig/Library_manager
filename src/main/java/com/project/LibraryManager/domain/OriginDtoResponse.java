@@ -17,5 +17,6 @@ public class OriginDtoResponse {
     private int publishedYear;
     private String isbn;
     private List<Long> booksIds;
+    private double rating;
 
 }

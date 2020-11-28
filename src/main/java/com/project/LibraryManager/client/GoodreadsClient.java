@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -23,23 +22,25 @@ public class GoodreadsClient {
     private String goodreadsReviewsUrl;
 
 
-    public URI buildUri(String isbn) {
+    public URI buildUriForSingleRating(String isbn) {
         URI uri = UriComponentsBuilder.fromHttpUrl(goodreadsReviewsUrl)
                 .queryParam("key", goodreadsKey)
                 .queryParam("isbns", isbn)
                 .build()
                 .encode()
                 .toUri();
-
         return uri;
     }
 
 
-    public String getRating(String isbn){
+    public String getSingleRating(String isbn) throws InterruptedException {
 
-        GoodreadsDto goodreadsDto = restTemplate.getForObject(buildUri(isbn), GoodreadsDto.class);
+        GoodreadsDto goodreadsDto = restTemplate.getForObject(buildUriForSingleRating(isbn), GoodreadsDto.class);
         String rating = goodreadsDto.getGoodreadsResponse().get(0).getAverageRating();
+        Thread.sleep(1000); //Goodreads API term of service: requests can not be sent more frequent than once per second.
         return rating;
     }
+
+
 
 }

@@ -1,6 +1,5 @@
 package com.project.LibraryManager.client;
 
-import com.project.LibraryManager.domain.GoodreadsDto;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,11 +15,11 @@ public class GoodreadsClientTestSuite {
     private GoodreadsClient goodreadsClient;
 
     @Test
-    public void testGetRating() {
+    public void testGetRating() throws InterruptedException {
         //given:
         String isbn = "0345339681"; //the Hobbit
         //when:
-        String rating = goodreadsClient.getRating(isbn);
+        String rating = goodreadsClient.getSingleRating(isbn);
         //then:
         Assert.assertEquals(4, rating.length());
     }

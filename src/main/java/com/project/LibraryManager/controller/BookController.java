@@ -34,9 +34,9 @@ public class BookController {
     @RequestMapping(value = "/books/createBook", method = RequestMethod.POST)
     public void createBook(@RequestParam long originId) throws OriginNotFoundException {
         Book tempBook = new Book();
-        tempBook.setOrigin(originService.getOrigin(originId).orElseThrow(OriginNotFoundException::new));
-        bookService.saveBook(tempBook);
         Origin baseOrigin = originService.getOrigin(originId).orElseThrow(OriginNotFoundException::new);
+        tempBook.setOrigin(baseOrigin);
+        bookService.saveBook(tempBook);
         baseOrigin.addBook(tempBook);
         originService.saveOrigin(baseOrigin);
     }
@@ -65,7 +65,7 @@ public class BookController {
     }
 
     @RequestMapping(value = "/books/setBookStatus/{bookId}/{bookStatus}", method = RequestMethod.PUT)
-    public void setStatusPut(@PathVariable long bookId, @PathVariable String bookStatus) throws BookNotFoundException, StatusNotFoundException {
+    public void setStatus(@PathVariable long bookId, @PathVariable String bookStatus) throws BookNotFoundException, StatusNotFoundException {
         bookService.setBookStatus(bookId, bookStatus);
     }
 
