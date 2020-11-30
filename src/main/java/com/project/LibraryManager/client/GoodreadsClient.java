@@ -1,6 +1,7 @@
 package com.project.LibraryManager.client;
 
 import com.project.LibraryManager.domain.GoodreadsDto;
+import com.project.LibraryManager.domain.GoodreadsRatingsRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -41,6 +42,16 @@ public class GoodreadsClient {
         return rating;
     }
 
+    public GoodreadsDto getMultipleRatings(GoodreadsRatingsRequest request) throws InterruptedException {
+
+        URI uri = UriComponentsBuilder.fromHttpUrl(goodreadsReviewsUrl)
+                .queryParam("key", goodreadsKey)
+                .build()
+                .encode()
+                .toUri();
+        Thread.sleep(1000); //Goodreads API term of service: requests can not be sent more frequent than once per second.
+        return restTemplate.postForObject(uri, request, GoodreadsDto.class);
+    }
 
 
 }

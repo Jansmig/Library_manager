@@ -23,7 +23,6 @@ public class OriginServiceTestSuite {
     @Autowired
     private OriginService originService;
 
-
     @Test
     public void testFindTitlesByPhrase(){
         //given
@@ -57,4 +56,3 @@ public class OriginServiceTestSuite {
     }
 
 }
-

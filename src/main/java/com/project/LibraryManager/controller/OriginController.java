@@ -80,4 +80,9 @@ public class OriginController {
         originService.deleteOrigin(originId);
     }
 
+    @RequestMapping(value = "/origins/allRatings", method = RequestMethod.PUT)
+    public void updateAllRatings() throws InterruptedException {
+        originService.updateAllOriginsRatings();
+    }
+
 }

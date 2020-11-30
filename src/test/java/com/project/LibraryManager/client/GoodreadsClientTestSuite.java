@@ -1,5 +1,8 @@
 package com.project.LibraryManager.client;
 
+import com.project.LibraryManager.domain.GoodreadsDto;
+import com.project.LibraryManager.domain.GoodreadsRatingsRequest;
+import com.project.LibraryManager.domain.GoodreadsStatsDto;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +25,19 @@ public class GoodreadsClientTestSuite {
         String rating = goodreadsClient.getSingleRating(isbn);
         //then:
         Assert.assertEquals(4, rating.length());
+    }
+
+    @Test
+    public void testGetMultipleRatings() {
+
+//        GoodreadsRatingsRequest ratingsRequest = new GoodreadsRatingsRequest();
+//        ratingsRequest.setIsbns(new String[]{"1416548947", "0817986626", "0441172717"});
+//
+//        GoodreadsDto goodreadsDto = goodreadsClient.getMultipleRatings(ratingsRequest);
+//
+//        for (GoodreadsStatsDto stat : goodreadsDto.getGoodreadsResponse()) {
+//            System.out.println(stat.getAverageRating());
+//        }
     }
 
 
