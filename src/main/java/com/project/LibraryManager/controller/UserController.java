@@ -31,6 +31,7 @@ public class UserController {
     public void createUser(@RequestBody UserDtoRequest userDtoRequest) throws UserInvalidNameException {
         userService.validateUserName(userDtoRequest.getFirstName());
         userService.validateUserName(userDtoRequest.getLastName());
+        userService.validateUserEmail(userDtoRequest.getEmail());
         User tempUser = userMapper.mapToUser(userDtoRequest);
         tempUser.setUserCreationDate(LocalDateTime.now());
         userService.saveUser(tempUser);
@@ -45,6 +46,7 @@ public class UserController {
     public void updateUser(@RequestBody UserDtoRequest userDtoRequest) throws UserInvalidNameException {
         userService.validateUserName(userDtoRequest.getFirstName());
         userService.validateUserName(userDtoRequest.getLastName());
+        userService.validateUserEmail(userDtoRequest.getEmail());
         userService.saveUser(userMapper.mapToUser(userDtoRequest));
     }
 

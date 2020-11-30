@@ -31,6 +31,9 @@ public class OriginController {
 
     @RequestMapping(value = "/origins", method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
     public void createOrigin(@RequestBody OriginDtoRequest originDtoRequest) {
+        originService.validateYearInput(originDtoRequest.getPublishedYear());
+        originService.validateIsbnInput(originDtoRequest.getIsbn());
+        originService.validateIfIsbnAlreadyExists(originDtoRequest.getIsbn());
         originService.saveOrigin(originMapper.mapToOrigin(originDtoRequest));
     }
 
@@ -72,6 +75,9 @@ public class OriginController {
 
     @RequestMapping(value = "/origins", method = RequestMethod.PUT, consumes = APPLICATION_JSON_VALUE)
     public void updateOrigin(@RequestBody OriginDtoRequest originDtoRequest) {
+        originService.validateYearInput(originDtoRequest.getPublishedYear());
+        originService.validateIsbnInput(originDtoRequest.getIsbn());
+        originService.validateIfIsbnAlreadyExists(originDtoRequest.getIsbn());
         originService.saveOrigin(originMapper.mapToOrigin(originDtoRequest));
     }
 

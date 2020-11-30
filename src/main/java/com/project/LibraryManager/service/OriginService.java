@@ -2,12 +2,12 @@ package com.project.LibraryManager.service;
 
 import com.project.LibraryManager.client.GoodreadsClient;
 import com.project.LibraryManager.domain.*;
-import com.project.LibraryManager.exception.InvalidTitleException;
-import com.project.LibraryManager.exception.OriginNotFoundException;
+import com.project.LibraryManager.exception.*;
 import com.project.LibraryManager.repository.OriginReposiotry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -39,11 +39,42 @@ public class OriginService {
                 .collect(Collectors.toList());
     }
 
-    public void validateTitleLength (String phrase) throws InvalidTitleException {
+    public void validateTitleLength(String phrase) throws InvalidTitleException {
         if (phrase.length() < 3) {
             throw new InvalidTitleException();
         }
     }
+
+    public void validateYearInput(Integer year) {
+        int currentYear = LocalDateTime.now().getYear();
+        if (year == null) {
+            throw new InvalidYearInputException();
+        } else if (-4000 > year && year > currentYear) {
+            throw new InvalidYearInputException();
+        }
+    }
+
+    public void validateIsbnInput(String isbn) {
+        if (isbn == null) {
+            throw new InvalidIsbnInputException();
+        } else if (!isbn.matches("\\d{10}|\\d{13}")) {
+            throw new InvalidIsbnInputException();
+        }
+    }
+
+    public void validateIfIsbnAlreadyExists(String isbn){
+        if (isbn == null) {
+            throw new InvalidIsbnInputException();
+        }
+        List<String> isbns = getAllOrigins().stream()
+                .map(n -> n.getIsbn())
+                .collect(Collectors.toList());
+
+        if(isbns.contains(isbn)){
+            throw new IsbnAlreadyExistsException();
+        }
+    }
+
 
     public void deleteOrigin(long originId) {
         originReposiotry.deleteById(originId);
@@ -55,7 +86,7 @@ public class OriginService {
         String isbn = originDtoRequest.getIsbn();
         String ratingString = goodreadsClient.getSingleRating(isbn);
         double rating = 0;
-        if(ratingString != null) {
+        if (ratingString != null) {
             rating = Double.parseDouble(ratingString);
         }
         updatedOrigin.setRating(rating);
@@ -85,7 +116,7 @@ public class OriginService {
 
     private GoodreadsRatingsRequest createGoodreadsRatingsRequest(List<Origin> originsList) {
         String[] isbnsArray = new String[originsList.size()];
-        for(int i = 0; i < originsList.size(); i++) {
+        for (int i = 0; i < originsList.size(); i++) {
             isbnsArray[i] = originsList.get(i).getIsbn();
         }
         return new GoodreadsRatingsRequest(isbnsArray);
