@@ -55,18 +55,24 @@ public class BookControllerTestSuite {
     @Test
     public void testCreateBook() throws Exception {
         //given
-        Origin origin = new Origin(999L, "title", "author", 2000, "1234567890", null, 0);
+        Origin origin = new Origin();
+        origin.setTitle("JJRobbery");
+        origin.setAuthor("Rob");
+        origin.setIsbn("1234567890");
+        originService.saveOrigin(origin); //it has to be saved as later stage of createBook() adds book to the origin and saves it (if it is not persisted before, nullpointer exception is thrown)
+        long originId = origin.getId();
         //when & then
         when(originService.getOrigin(ArgumentMatchers.anyLong())).thenReturn(Optional.of(origin));
-      //  when(originService.saveOrigin(ArgumentMatchers.any(Origin.class))).thenReturn(origin);
-      //  when(origin.addBook(ArgumentMatchers.any(Book.class))).thenReturn(void);
+        when(originService.saveOrigin(ArgumentMatchers.any(Origin.class))).thenReturn(origin);
 
         mockMvc.perform(post("/v1/books/createBook")
                 .contentType(MediaType.APPLICATION_JSON)
-                .param("originId", "999"))
+                .param("originId", String.valueOf(origin.getId())))
                 .andExpect(status().isOk());
 
         Mockito.verify(bookService, times(1)).saveBook(any());
+        //clean up:
+        originService.deleteOrigin(originId);
     }
 
 

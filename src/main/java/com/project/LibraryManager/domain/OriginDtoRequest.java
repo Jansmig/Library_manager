@@ -3,12 +3,14 @@ package com.project.LibraryManager.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 public class OriginDtoRequest {
 
     private long id;

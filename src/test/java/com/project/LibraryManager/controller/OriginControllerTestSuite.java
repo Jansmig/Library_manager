@@ -187,4 +187,31 @@ public class OriginControllerTestSuite {
         Mockito.verify(originService, times(1)).deleteOrigin(1L);
     }
 
+
+    @Test
+    public void testUpdateOriginRating() throws Exception {
+        //given:
+        OriginDtoRequest originDtoRequest = new OriginDtoRequest(1L, "Hobbit", "Tolkien", 2000, "0938768425", null, 4.5);
+        Gson gson = new Gson();
+        String requestBody = gson.toJson(originDtoRequest);
+        //when & then:
+        mockMvc.perform(put("/v1/origins/rating")
+                .characterEncoding("UTF-8")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody))
+                .andExpect(status().isOk());
+
+        Mockito.verify(originService, times(1)).updateOriginRating(any());
+    }
+
+    @Test
+    public void testUpdateAllRatings() throws Exception {
+        //given:
+        //when & then:
+        mockMvc.perform(put("/v1/origins/allRatings"))
+                .andExpect(status().isOk());
+
+        Mockito.verify(originService, times(1)).updateAllOriginsRatings();
+    }
+
 }

@@ -207,5 +207,15 @@ public class RentalControllerTestSuite {
 
     }
 
+    @Test
+    public void testDeleteRental() throws Exception {
+        //given:
+        //when & then:
+        mockMvc.perform(delete("/v1/rentals/1"))
+                .andExpect(status().isOk());
+
+        Mockito.verify(rentalService, times(1)).deleteRental(1L);
+    }
+
 
 }

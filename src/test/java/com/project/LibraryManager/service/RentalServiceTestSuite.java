@@ -1,6 +1,7 @@
 package com.project.LibraryManager.service;
 
 import com.project.LibraryManager.domain.Rental;
+import com.project.LibraryManager.exception.RentalNotActiveException;
 import com.project.LibraryManager.repository.RentalReposiotry;
 import org.junit.Assert;
 import org.junit.Test;
@@ -52,5 +53,21 @@ public class RentalServiceTestSuite {
         rentalReposiotry.deleteById(rentalTwoId);
 
     }
+
+    @Test(expected = RentalNotActiveException.class)
+    public void testValidateInactiveRentalIfActive(){
+        Rental rental = new Rental();
+        rental.setActive(false);
+        rentalService.validateRentalIfActive(rental);
+    }
+
+    @Test
+    public void testValidateActiveRentalIfActive(){
+        Rental rental = new Rental();
+        rental.setActive(true);
+        rentalService.validateRentalIfActive(rental);
+    }
+
+
 
 }

@@ -3,6 +3,7 @@ package com.project.LibraryManager.service;
 import com.project.LibraryManager.domain.Book;
 import com.project.LibraryManager.domain.BookStatus;
 import com.project.LibraryManager.domain.Origin;
+import com.project.LibraryManager.exception.BookNotAvailableException;
 import com.project.LibraryManager.exception.StatusNotFoundException;
 import com.project.LibraryManager.repository.BookReposiotry;
 import com.project.LibraryManager.repository.OriginReposiotry;
@@ -163,6 +164,27 @@ public class BookServiceTestSuite {
         //clean up
         bookReposiotry.deleteById(bookId);
         originReposiotry.deleteById(originId);
+    }
+
+    @Test(expected = BookNotAvailableException.class)
+    public void testValidateLostBookAvailability(){
+        Book book = new Book();
+        book.setLost();
+        bookService.validateBookAvailability(book);
+    }
+
+    @Test(expected = BookNotAvailableException.class)
+    public void testValidateRentedBookAvailability(){
+        Book book = new Book();
+        book.setRented();
+        bookService.validateBookAvailability(book);
+    }
+
+    @Test
+    public void testValidateAvailableBookAvailability(){
+        Book book = new Book();
+        book.setAvailable();
+        bookService.validateBookAvailability(book);
     }
 
 

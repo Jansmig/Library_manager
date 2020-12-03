@@ -38,7 +38,7 @@ public class GoodreadsClient {
 
         GoodreadsDto goodreadsDto = restTemplate.getForObject(buildUriForSingleRating(isbn), GoodreadsDto.class);
         String rating = goodreadsDto.getGoodreadsResponse().get(0).getAverageRating();
-        Thread.sleep(1000); //Goodreads API term of service: requests can not be sent more frequent than once per second.
+        Thread.sleep(1000); //Goodreads API term of service: requests can not be sent more frequently than once per second.
         return rating;
     }
 
@@ -49,7 +49,7 @@ public class GoodreadsClient {
                 .build()
                 .encode()
                 .toUri();
-        Thread.sleep(1000); //Goodreads API term of service: requests can not be sent more frequent than once per second.
+        Thread.sleep(1000); //Goodreads API term of service: requests can not be sent more frequently than once per second.
         return restTemplate.postForObject(uri, request, GoodreadsDto.class);
     }
 

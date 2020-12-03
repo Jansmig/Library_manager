@@ -20,24 +20,35 @@ public class GoodreadsClientTestSuite {
     @Test
     public void testGetRating() throws InterruptedException {
         //given:
-        String isbn = "0345339681"; //the Hobbit
+        String hobbitIsbn = "0345339681";
         //when:
-        String rating = goodreadsClient.getSingleRating(isbn);
+        String rating = goodreadsClient.getSingleRating(hobbitIsbn);
         //then:
         Assert.assertEquals(4, rating.length());
+        Assert.assertNotEquals(0.0, Double.parseDouble(rating));
+        Assert.assertNotNull(rating);
     }
 
     @Test
-    public void testGetMultipleRatings() {
-
-//        GoodreadsRatingsRequest ratingsRequest = new GoodreadsRatingsRequest();
-//        ratingsRequest.setIsbns(new String[]{"1416548947", "0817986626", "0441172717"});
-//
-//        GoodreadsDto goodreadsDto = goodreadsClient.getMultipleRatings(ratingsRequest);
-//
-//        for (GoodreadsStatsDto stat : goodreadsDto.getGoodreadsResponse()) {
-//            System.out.println(stat.getAverageRating());
-//        }
+    public void testGetMultipleRatings() throws InterruptedException {
+        //given:
+        String goneWithTheWindIsbn = "1416548947";
+        String essenceOfFriedmanIsbn = "0817986626";
+        String duneIsbn = "0441172717";
+        GoodreadsRatingsRequest ratingsRequest = new GoodreadsRatingsRequest();
+        ratingsRequest.setIsbns(new String[]{goneWithTheWindIsbn, essenceOfFriedmanIsbn, duneIsbn});
+        //when:
+        GoodreadsDto goodreadsDto = goodreadsClient.getMultipleRatings(ratingsRequest);
+        //then:
+        Assert.assertEquals(4, goodreadsDto.getGoodreadsResponse().get(0).getAverageRating().length());
+        Assert.assertEquals(4, goodreadsDto.getGoodreadsResponse().get(1).getAverageRating().length());
+        Assert.assertEquals(4, goodreadsDto.getGoodreadsResponse().get(2).getAverageRating().length());
+        Assert.assertNotEquals(0.0, Double.parseDouble(goodreadsDto.getGoodreadsResponse().get(0).getAverageRating()));
+        Assert.assertNotEquals(0.0, Double.parseDouble(goodreadsDto.getGoodreadsResponse().get(1).getAverageRating()));
+        Assert.assertNotEquals(0.0, Double.parseDouble(goodreadsDto.getGoodreadsResponse().get(2).getAverageRating()));
+        Assert.assertNotNull(goodreadsDto.getGoodreadsResponse().get(0).getAverageRating());
+        Assert.assertNotNull(goodreadsDto.getGoodreadsResponse().get(1).getAverageRating());
+        Assert.assertNotNull(goodreadsDto.getGoodreadsResponse().get(2).getAverageRating());
     }
 
 

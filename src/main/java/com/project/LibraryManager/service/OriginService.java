@@ -49,7 +49,7 @@ public class OriginService {
         int currentYear = LocalDateTime.now().getYear();
         if (year == null) {
             throw new InvalidYearInputException();
-        } else if (-4000 > year && year > currentYear) {
+        } else if (-4000 > year || year > currentYear) {
             throw new InvalidYearInputException();
         }
     }
