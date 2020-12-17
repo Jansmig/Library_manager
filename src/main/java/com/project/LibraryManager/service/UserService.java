@@ -1,6 +1,7 @@
 package com.project.LibraryManager.service;
 
 import com.project.LibraryManager.domain.User;
+import com.project.LibraryManager.exception.EmailAlreadyExistsException;
 import com.project.LibraryManager.exception.UserInvalidEmailException;
 import com.project.LibraryManager.exception.UserInvalidNameException;
 import com.project.LibraryManager.repository.UserReposiotry;
@@ -9,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -33,14 +37,23 @@ public class UserService {
         }
     }
 
-    public void validateUserEmail(String email) {
+    public void validateUserEmail (String email) throws UserInvalidEmailException {
         String reg = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
-
-        if(email == null) {
+        if(!email.matches(reg)){
             throw new UserInvalidEmailException();
         }
-        else if(!email.matches(reg)){
-            throw new UserInvalidEmailException();
+    }
+
+    public void validateIfEmailAlreadyExists(String email){
+        if(email == null){
+            throw new IllegalArgumentException("E-mail cannot be null");
+        }
+        List<String> emails = getAllUsers().stream()
+                .map(u -> u.getEmail())
+                .collect(Collectors.toList());
+
+        if(emails.contains(email)){
+            throw new EmailAlreadyExistsException();
         }
     }
 

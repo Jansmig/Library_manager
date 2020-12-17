@@ -77,7 +77,6 @@ public class OriginController {
     public void updateOrigin(@RequestBody OriginDtoRequest originDtoRequest) {
         originService.validateYearInput(originDtoRequest.getPublishedYear());
         originService.validateIsbnInput(originDtoRequest.getIsbn());
-        originService.validateIfIsbnAlreadyExists(originDtoRequest.getIsbn());
         originService.saveOrigin(originMapper.mapToOrigin(originDtoRequest));
     }
 

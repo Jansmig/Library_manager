@@ -32,6 +32,7 @@ public class UserController {
         userService.validateUserName(userDtoRequest.getFirstName());
         userService.validateUserName(userDtoRequest.getLastName());
         userService.validateUserEmail(userDtoRequest.getEmail());
+        userService.validateIfEmailAlreadyExists(userDtoRequest.getEmail());
         User tempUser = userMapper.mapToUser(userDtoRequest);
         tempUser.setUserCreationDate(LocalDateTime.now());
         userService.saveUser(tempUser);
