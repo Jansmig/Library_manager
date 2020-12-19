@@ -1,6 +1,7 @@
 package com.project.LibraryManager.service;
 
 import com.project.LibraryManager.domain.User;
+import com.project.LibraryManager.exception.EmailAlreadyExistsException;
 import com.project.LibraryManager.exception.UserInvalidEmailException;
 import com.project.LibraryManager.exception.UserInvalidNameException;
 import com.project.LibraryManager.repository.UserReposiotry;
@@ -111,6 +112,23 @@ public class UserServiceTestSuite {
         Assertions.assertThrows(UserInvalidEmailException.class, () -> userService.validateUserEmail("email@gmail,com"));
         Assertions.assertThrows(UserInvalidEmailException.class, () -> userService.validateUserEmail("email@example..com"));
         Assertions.assertThrows(UserInvalidEmailException.class, () -> userService.validateUserEmail("Abc..123@example.com"));
+    }
+
+    @Test
+    public void testValidateIfEmailAlreadyExists(){
+        //given
+        User user = new User();
+        user.setEmail("Bob@gmail.com");
+        String checkedExistingEmail = user.getEmail();
+        String nonexistingEmail = "fwefdrsgthy5t4ewr2qe2547y4fbfeb3qwg3q8reg12vbwfvsdejfvsbf32y4r217@tert4rgf.com";
+        //when
+        userService.saveUser(user);
+        long userId = user.getId();
+        //then
+        Assertions.assertThrows(EmailAlreadyExistsException.class, () -> userService.validateIfEmailAlreadyExists(checkedExistingEmail));
+        userService.validateIfEmailAlreadyExists(nonexistingEmail);
+        //clean up
+        userReposiotry.deleteById(userId);
     }
 
 }

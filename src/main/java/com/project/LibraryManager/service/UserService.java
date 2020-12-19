@@ -38,8 +38,9 @@ public class UserService {
     }
 
     public void validateUserEmail (String email) throws UserInvalidEmailException {
+        String checkedEmail = email.toLowerCase();
         String reg = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
-        if(!email.matches(reg)){
+        if(!checkedEmail.matches(reg)){
             throw new UserInvalidEmailException();
         }
     }
@@ -48,11 +49,12 @@ public class UserService {
         if(email == null){
             throw new IllegalArgumentException("E-mail cannot be null");
         }
+        String checkedEmial = email.toLowerCase();
         List<String> emails = getAllUsers().stream()
-                .map(u -> u.getEmail())
+                .map(u -> u.getEmail().toLowerCase())
                 .collect(Collectors.toList());
 
-        if(emails.contains(email)){
+        if(emails.contains(checkedEmial)){
             throw new EmailAlreadyExistsException();
         }
     }
